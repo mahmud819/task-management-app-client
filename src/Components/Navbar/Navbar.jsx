@@ -2,11 +2,12 @@ import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "../../App.css";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import image from '../../assets/logo1.png'
 
 const Navbar = () => {
 
 
-    const {user,setLoading} = useContext(AuthContext);
+    const {user,setLoading,userLogOut} = useContext(AuthContext);
 
     const links1 = (
     <>
@@ -27,17 +28,7 @@ const Navbar = () => {
           <NavLink to="/joinAsHR" className="btn btn-outline btn-sm btn-info ml-2">
             Pricing
           </NavLink>
-        </li>
-      
-
-      
-        <li>
-          <NavLink to="/dashBoard" className="btn btn-outline btn-sm btn-info ml-2">
-            DashBoard
-          </NavLink>
-        </li>
-
-      
+        </li>   
       <li>
         <NavLink to="/" className="btn btn-outline btn-sm btn-info ml-2">
           Resources
@@ -81,9 +72,13 @@ const Navbar = () => {
         )} */}
         <Link
           to="/"
-          className="btn btn-ghost text-lg text-[#1bc] font-xtrabold lg:text-xl"
+          className=" text-lg text-[#1bc] font-xtrabold lg:text-xl"
         >
-         Any Task
+          <div className="flex justify-center items-center gap-x-2">
+            <img className="w-12 h-12" src={image} alt="" />
+            <p>Any Task </p>
+          </div>
+         
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
