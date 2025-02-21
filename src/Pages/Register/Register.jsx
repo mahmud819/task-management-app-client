@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import Swal from 'sweetalert2';
+import useAxios from '../../CustomHooks/UseAxios/useAxios';
 
 const Register = () => {
 
-     // const axiosHook = useAxiosHooks();
+     const axiosHook = useAxios();
      const naviGate = useNavigate();
      const{createUser} = useContext(AuthContext);
      // console.log(createUser);
@@ -20,20 +21,23 @@ const Register = () => {
      const newUsers ={name,email}
      createUser(email,password)
      .then(res=>{
+
+        axiosHook.post('/users',newUsers)
+         .then(res=>{
+ 
+           console.log(res.data);
+         })
+         .catch(err=>{
+           console.log(err);
+                 })
+
          console.log(res)
          Swal.fire({
            title: "Well Done!",
            text: "Your account is created successfuly!",
            icon: "success"
          });
-         // axiosHook.post('/users',newUsers)
-         // .then(res=>{
- 
-         //   console.log(res);
-         // })
-         // .catch(err=>{
-         //   console.log(err);
-         //         })
+         
      })
      .catch(error=>{
          console.log(error.message);

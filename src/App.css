@@ -61,3 +61,15 @@
   color: #000;
   font-size: 18px;
 } */
+ .primary-btn{
+  width: 30%;
+  padding: 4px 10px;
+  font-size: large;
+  background-color: #9b2181;
+  color: white;
+  border-radius: 20px;
+ }
+ .primary-btn:hover{
+   background-color: #b2579e;
+   
+ }

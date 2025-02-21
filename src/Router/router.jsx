@@ -7,6 +7,7 @@ import Home from "../Pages/Home/Home";
 import Error from "../Pages/Error/Error";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import Product from "../Pages/Product/Product";
 
 
  export const router = createBrowserRouter([
@@ -16,17 +17,18 @@ import Register from "../Pages/Register/Register";
       errorElement: <Error></Error>,
       children: [
         {
-            path: '/',
-            element:<Home></Home>
+          path: '/',
+          element:<Product></Product>
         },
-        {
-          path: '/login',
-          element:<Login></Login>
-       },
-      {
-        path: '/register',
-        element:<Register></Register>
-      },
+        
       ]
     },
+    {
+      path: '/login',
+      element:<Login></Login>
+   },
+  {
+    path: '/register',
+    element:<Register></Register>
+  },
   ]);
