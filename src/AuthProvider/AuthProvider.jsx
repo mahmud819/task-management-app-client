@@ -10,6 +10,11 @@ const AuthProvider = ({children}) => {
 
     const [user,setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [newTask, setNewTask] = useState("");
+    const [columns, setColumns] = useState({ todo: [], inProgress: [], done: [] });
+    const [isEditing, setIsEditing] = useState(false);
+
+    //  const [newTitle, setNewTitle] = useState(title );
     
     const googleProvider = new GoogleAuthProvider();
 
@@ -37,7 +42,13 @@ const AuthProvider = ({children}) => {
         createUser,
         userLogin,
         signInWithGoogle,
-        userLogOut
+        userLogOut,
+        newTask,
+        setNewTask,
+        columns,
+        setColumns,
+        isEditing, 
+        setIsEditing,
     }
     useEffect(()=>{
         setLoading(true);

@@ -8,6 +8,10 @@ import Error from "../Pages/Error/Error";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import Product from "../Pages/Product/Product";
+import Features from "../Pages/Features/Features";
+import Pricing from "../Pages/Pricing/Pricing";
+import Resources from "../Pages/Resources/Resources";
+import MyTasks from "../Pages/MyTasks/MyTasks";
 
 
  export const router = createBrowserRouter([
@@ -20,7 +24,22 @@ import Product from "../Pages/Product/Product";
           path: '/',
           element:<Product></Product>
         },
-        
+        {
+          path: '/features',
+          element:<Features></Features>
+        },
+        {
+          path: '/pricing',
+          element:<Pricing></Pricing>
+        },
+        {
+          path: '/resources',
+          element:<Resources></Resources>
+        },
+        {
+          path: '/myTasks',
+          element:<MyTasks></MyTasks>
+        },
       ]
     },
     {

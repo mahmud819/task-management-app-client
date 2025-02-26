@@ -18,20 +18,25 @@ const Navbar = () => {
       </li>
 
         <li>
-          <NavLink to="/joinAsEmployee" className="btn btn-outline btn-sm btn-info ml-2">
+          <NavLink to="/features" className="btn btn-outline btn-sm btn-info ml-2">
             Features
           </NavLink>
         </li>
       
       
         <li>
-          <NavLink to="/joinAsHR" className="btn btn-outline btn-sm btn-info ml-2">
+          <NavLink to="/pricing" className="btn btn-outline btn-sm btn-info ml-2">
             Pricing
           </NavLink>
         </li>   
       <li>
-        <NavLink to="/" className="btn btn-outline btn-sm btn-info ml-2">
+        <NavLink to="/resources" className="btn btn-outline btn-sm btn-info ml-2">
           Resources
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/myTasks" className="btn btn-outline btn-sm btn-info ml-2">
+          My Tasks
         </NavLink>
       </li>
     </>

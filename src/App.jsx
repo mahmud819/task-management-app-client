@@ -1,35 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-function App() {
-  const [count, setCount] = useState(0)
+const columns = ["To Do", "In Progress", "Done"];
+
+const DraggableItem = ({ item }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: item.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    padding: "10px",
+    margin: "5px",
+    background: "#fff",
+    borderRadius: "5px",
+    cursor: "grab",
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      {item.text}
+    </div>
+  );
+};
 
-export default App
+const App = () => {
+  const [items, setItems] = useState([]);
+  const [ws, setWs] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/items")
+      .then((res) => res.json())
+      .then(setItems);
+
+    const socket = new WebSocket("ws://localhost:5000");
+    setWs(socket);
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === "UPDATE_ITEMS") {
+        fetch("http://localhost:5000/items")
+          .then((res) => res.json())
+          .then(setItems);
+      }
+    };
+
+    return () => socket.close();
+  }, []);
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeItem = items.find((item) => item.id === active.id);
+    const updatedItems = items.map((item) =>
+      item.id === active.id ? { ...item, column: over.id } : item
+    );
+
+    setItems(updatedItems);
+    ws.send(JSON.stringify({ type: "MOVE_ITEM", item: activeItem, toColumn: over.id }));
+  };
+
+  return (
+    <div style={{ display: "flex", gap: "20px", padding: "20px" }}>
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        {columns.map((column) => (
+          <div key={column} id={column} style={{ width: "200px", padding: "10px", background: "#f4f4f4", minHeight: "200px" }}>
+            <h3>{column}</h3>
+            <SortableContext items={items.filter((item) => item.column === column)} strategy={verticalListSortingStrategy}>
+              {items.filter((item) => item.column === column).map((item) => (
+                <DraggableItem key={item.id} item={item} />
+              ))}
+            </SortableContext>
+          </div>
+        ))}
+      </DndContext>
+    </div>
+  );
+};
+
+export default App;

@@ -7,7 +7,7 @@ import '../../App.css'
 const Banner = () => {
   return (
     <div className="py-12 flex flex-col lg:flex-row">
-      <div className="w-[30%]">
+      <div className="w-[40%]">
         <Lottie animationData={animation1} ></Lottie>
       </div>
       <div>
@@ -22,14 +22,15 @@ const Banner = () => {
           One Workspace for <br />
           Eevery Team
         </h1>
+        <p className="w-[70%] text-center mx-auto pt-4">Manage different kind of task,Asign different kind of works in many teams, Trak time and Attendence. Review Finalcials and much more </p>
         {/*  button  */}
-        <div className="mx-auto mt-4 lg:mt-10">
+        <div className="mx-auto mt-4 lg:mt-6">
         
         <button className="primary-btn hover:btn-sm" >For Free Trail</button>
         </div>
         
       </div>
-      <div className="w-[20%]">
+      <div className="w-[30%]">
         <Lottie animationData={animation2}></Lottie>
       </div>
     </div>
